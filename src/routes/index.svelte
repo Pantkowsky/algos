@@ -2,58 +2,41 @@
 	export const prerender = true;
 </script>
 
-<script lang="ts">
-	import Counter from '$lib/Counter.svelte';
+<script>
+	import Chooser from '$lib/chooser/Chooser.svelte'
+	import Chart from '$lib/chart/Chart.svelte'
+
+	$: entries = [...Array(100).keys()]
+
+	$: bars = entries.reverse().map(function(v) {
+        return {
+            height: (v / entries.length) * 100,
+            width: (100 / entries.length) * 100
+        }
+    })
+
+	function shuffle() {
+		const a = entries
+    	for (let i = a.length - 1; i > 0; i--) {
+    	    const j = Math.floor(Math.random() * (i + 1));
+    	    [a[i], a[j]] = [a[j], a[i]];
+    	}
+    	entries = a
+	}
+
+	function sort() {
+		entries = entries.sort(function(a, b) {
+			return a - b
+		})
+	}
+
 </script>
 
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
 
-<section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
-</section>
-
-<style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 1;
-	}
-
-	h1 {
-		width: 100%;
-	}
-
-	.welcome {
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
-
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
-</style>
+<Chooser/>
+<Chart entries={bars}/>
+<button on:click={shuffle}>Randomize</button>
+<button on:click={sort}>Sort</button>
