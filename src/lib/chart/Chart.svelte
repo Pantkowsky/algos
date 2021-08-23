@@ -6,7 +6,6 @@
 <div class="container">
    {#each entries as entry}
     <div class="bar" style="height:{entry.height}%; width:{entry.width}%"/>
-    <!-- <div class="bar" style="height:{entry}%;"/> -->
    {/each}
 </div>
 
