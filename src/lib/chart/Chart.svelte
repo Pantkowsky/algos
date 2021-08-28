@@ -14,7 +14,8 @@
     $: current = counter + 1
 
 	export function sort() {
-		entry = array[array.length - counter]
+        entry = array[array.length - counter]
+        move()
 		counter += 1
 	}
 
@@ -27,20 +28,13 @@
         array = a
 	}
 
-    /**
-    * @param {HTMLDivElement} node
-    */
-    function move(node, { speed = 2000, index }) {
-        return {
-            speed, 
-            tick: t => {
-                var parent = document.getElementById('chart')
-                console.log(parent.childNodes)
-                var oldChild = parent.firstElementChild
+    function move() {
+        const index = current
+        var parent = document.getElementById('chart')
+        var old = parent.children[counter]
+        var given = document.getElementById('' + current)
 
-                parent.insertBefore(node, oldChild)
-            }
-        }
+        parent.insertBefore(given, old)
     }
 
 </script>
