@@ -47,11 +47,7 @@
 
 <div id="chart" class="container">
     {#each bars as entry}
-        {#if current == entry.index}
-            <Bar sorted dimensions={entry}/>
-        {:else}
-            <Bar sorted={false} dimensions={entry}/>
-        {/if}
+        <Bar sorted={current == entry.index} dimensions={entry}/>
     {/each}
 </div>
 
@@ -68,6 +64,5 @@
         position: relative;
 		flex: 1;
     }
-
 
 </style>
