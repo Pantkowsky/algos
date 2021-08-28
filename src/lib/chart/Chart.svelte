@@ -47,7 +47,7 @@
 
 <div id="chart" class="container">
     {#each bars as entry}
-        <Bar sorted={current == entry.index} dimensions={entry}/>
+        <Bar isCurrent={current} props={entry}/>
     {/each}
 </div>
 

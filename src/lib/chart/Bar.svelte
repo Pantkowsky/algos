@@ -1,9 +1,12 @@
 <script>
-    export let sorted
-    export let dimensions = {}
+    // export let sorted
+    export let isCurrent
+    export let props = {}
+
+    $: current = isCurrent == props.index
 </script>
 
-<div class="{sorted ? 'sorted' : 'default'}" style="height:{dimensions.height}%;width:{dimensions.width}%"/>
+<div class="{current ? 'sorted' : 'default'}" id="{props.index}" style="height:{props.height}%; width:{props.width}%"/>
 
 <style>
 
