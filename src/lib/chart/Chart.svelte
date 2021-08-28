@@ -1,40 +1,56 @@
 <script>
-    export let entries
-    export let current
+    let counter = 0
+
+    let array = [...Array(100).keys()]
+	$: bars = array.reverse().map(function(v) {
+        return {
+            index: v,
+            height: (v / array.length) * 100,
+            width: (100 / array.length) * 100
+        }
+    })
+    $: entry = 0
+    $: current = counter + 1
+
+	export function sort() {
+		entry = array[array.length - counter]
+		counter += 1
+	}
 
     export function shuffle() {
-		const a = entries
+		const a = array
     	for (let i = a.length - 1; i > 0; i--) {
     	    const j = Math.floor(Math.random() * (i + 1));
     	    [a[i], a[j]] = [a[j], a[i]];
     	}
-        entries = a
+        array = a
 	}
 
-    function move(node, { speed = 2000 }) {
+    /**
+    * @param {HTMLDivElement} node
+    */
+    function move(node, { speed = 2000, index }) {
         return {
             speed, 
             tick: t => {
-                const parent = document.getElementById('parent')
-                var oldChild = parent.childNodes[0]
-                var newChild = parent.childNodes[current]
+                var parent = document.getElementById('chart')
+                console.log(parent.childNodes)
+                var oldChild = parent.firstElementChild
 
-                newChild.parentNode.insertBefore(newChild, oldChild)
+                parent.insertBefore(node, oldChild)
             }
         }
     }
+
 </script>
 
-{@debug current}
-{@debug entries}
-
-<div id="parent" class="container">
-   {#each entries as entry}
-    {#if current == entry.index}
-        <div in:move class="sorted" style="height:{entry.height}%; width:{entry.width}%"/>
-    {:else}
-        <div class="bar" style="height:{entry.height}%; width:{entry.width}%"/>
-    {/if}
+<div id="chart" class="container">
+    {#each bars as entry}
+        {#if current == entry.index}
+            <div in:move={{ index: current }} class="sorted" style="height:{entry.height}%; width:{entry.width}%"/>
+        {:else}
+            <div class="bar" style="height:{entry.height}%; width:{entry.width}%"/>
+        {/if}
     {/each}
 </div>
 
@@ -71,4 +87,5 @@
         align-self: baseline;
         display: flex;
     }
+
 </style>
