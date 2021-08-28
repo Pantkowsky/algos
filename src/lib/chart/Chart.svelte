@@ -1,6 +1,7 @@
 <script>
-    let counter = 0
+    import Bar from "./Bar.svelte"
 
+    let counter = 0
     let array = [...Array(100).keys()]
 	$: bars = array.reverse().map(function(v) {
         return {
@@ -47,9 +48,9 @@
 <div id="chart" class="container">
     {#each bars as entry}
         {#if current == entry.index}
-            <div in:move={{ index: current }} class="sorted" style="height:{entry.height}%; width:{entry.width}%"/>
+            <Bar sorted dimensions={entry}/>
         {:else}
-            <div class="bar" style="height:{entry.height}%; width:{entry.width}%"/>
+            <Bar sorted={false} dimensions={entry}/>
         {/if}
     {/each}
 </div>
@@ -68,24 +69,5 @@
 		flex: 1;
     }
 
-    .bar {
-        width: 1%;
-        margin-top: 3px;
-        margin-left: 1px;
-        background-color: rgb(109, 158, 250);
-        position: relative;
-        align-self: baseline;
-        display: flex;
-    }
-    
-    .sorted {
-        width: 1%;
-        margin-top: 3px;
-        margin-left: 1px;
-        background-color: rgb(250, 109, 139);
-        position: relative;
-        align-self: baseline;
-        display: flex;
-    }
 
 </style>
