@@ -2,7 +2,7 @@
     import Bar from "./Bar.svelte"
 
     let counter = 0
-    let array = [...Array(100).keys()]
+    let array = [...Array(200).keys()]
 	$: bars = array.reverse().map(function(v) {
         return {
             index: v,
@@ -17,6 +17,7 @@
         entry = array[array.length - counter]
         move()
 		counter += 1
+        setTimeout(sort, 20)
 	}
 
     export function shuffle() {
