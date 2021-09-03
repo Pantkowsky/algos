@@ -1,8 +1,9 @@
 <script>
     import Bar from "./Bar.svelte"
 
-    let counter = 0
+    let index = 0
     let array = [...Array(200).keys()]
+    
 	$: bars = array.reverse().map(function(v) {
         return {
             index: v,
@@ -11,32 +12,43 @@
         }
     })
     $: entry = 0
-    $: current = counter + 1
+    $: current = index
 
-	export function sort() {
-        entry = array[array.length - counter]
-        move()
-		counter += 1
+    export function sort() {
+        
+        var min, next
+        min = index
+        entry = array[array.length - index]
+
+        for (next = index + 1; next < array.length; next++) {
+            if(array[next] < array[min]) {
+                min = next
+            }
+            swap(index, min)
+        }
+
+        index += 1
         setTimeout(sort, 20)
-	}
 
-    export function shuffle() {
-		const a = array
+    }
+
+    function swap(i, j) {
+        var parent = document.getElementById('chart')
+        var first = document.getElementById('' + i)
+        var firstSibling = first.nextElementSibling
+        var second = document.getElementById('' + j)
+
+        parent.insertBefore(first, second)
+        parent.insertBefore(second, firstSibling)
+
+    }
+
+    export function shuffle(a) {
     	for (let i = a.length - 1; i > 0; i--) {
     	    const j = Math.floor(Math.random() * (i + 1));
     	    [a[i], a[j]] = [a[j], a[i]];
     	}
-        array = a
 	}
-
-    function move() {
-        const index = current
-        var parent = document.getElementById('chart')
-        var old = parent.children[counter]
-        var given = document.getElementById('' + current)
-
-        parent.insertBefore(given, old)
-    }
 
 </script>
 
