@@ -1,8 +1,10 @@
 <script>
     import Bar from "./Bar.svelte"
+    import { entries } from "$lib/stores/entries-store"
 
     let index = 0
-    let array = [...Array(200).keys()]
+
+    export let array
     
 	$: bars = array.reverse().map(function(v) {
         return {
@@ -42,13 +44,6 @@
         parent.insertBefore(second, firstSibling)
 
     }
-
-    export function shuffle(a) {
-    	for (let i = a.length - 1; i > 0; i--) {
-    	    const j = Math.floor(Math.random() * (i + 1));
-    	    [a[i], a[j]] = [a[j], a[i]];
-    	}
-	}
 
 </script>
 
