@@ -8,6 +8,7 @@
 	import { entries } from "$lib/stores/entries-store"
 
 	let chart
+
 </script>
 
 <svelte:head>

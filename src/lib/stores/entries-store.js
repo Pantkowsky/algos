@@ -3,11 +3,12 @@ import { writable } from 'svelte/store'
 function createArray() {
 
     const array = [...Array(200).keys()]
-    const { subscribe, set, update } = writable(array)
+    const { subscribe, set, update } = writable(array.reverse())
 
     return {
         subscribe,
         shuffle: () => set(shuffle([...Array(200).keys()])),
+        swap: (i, j) => update(arr => swap(arr, i, j)),
         reset: () => set(array)
     }
 }
@@ -18,6 +19,13 @@ function shuffle(a) {
         [a[i], a[j]] = [a[j], a[i]];
     }
     return a
+}
+
+function swap(arr, i, j) {
+    var temp = arr[i]
+    arr[i] = arr[j]
+    arr[j] = temp
+    return arr
 }
 
 export let entries = createArray()

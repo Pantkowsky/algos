@@ -6,7 +6,7 @@
 
     export let array
     
-	$: bars = array.reverse().map(function(v) {
+	$: bars = array.map(function(v) {
         return {
             index: v,
             height: (v / array.length) * 100,
@@ -17,7 +17,7 @@
     $: current = index
 
     export function sort() {
-        
+
         var min, next
         min = index
         entry = array[array.length - index]
@@ -26,7 +26,7 @@
             if(array[next] < array[min]) {
                 min = next
             }
-            swap(index, min)
+            entries.swap(index, min)
         }
 
         index += 1
