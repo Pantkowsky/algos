@@ -2,12 +2,13 @@ import { writable } from 'svelte/store'
 
 function createArray() {
 
-    const array = [...Array(200).keys()]
+    const SIZE = 100
+    const array = [...Array(SIZE).keys()]
     const { subscribe, set, update } = writable(array.reverse())
 
     return {
         subscribe,
-        shuffle: () => set(shuffle([...Array(200).keys()])),
+        shuffle: () => set(shuffle([...Array(SIZE).keys()])),
         swap: (i, j) => update(arr => swap(arr, i, j)),
         reset: () => set(array)
     }
